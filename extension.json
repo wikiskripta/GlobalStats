@@ -1,0 +1,21 @@
+{
+	"name": "GlobalStats",
+	"version": "1.2.0",
+	"author": "Josef Martiňák, Petr Kajzar",
+	"url": "http://www.wikiskripta.eu",
+	"description": "Global statistics of this Wiki.",
+	"descriptionmsg": "globalstats-desc",
+	"type": "specialpage",
+	"SpecialPages": {
+		"GlobalStats": "GlobalStats"
+	},
+	"MessagesDirs": {
+		"GlobalStats": [
+			"i18n"
+		]
+	},
+	"AutoloadClasses": {
+		"GlobalStats": "GlobalStats_body.php"
+	},
+	"manifest_version": 1
+}
