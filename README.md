@@ -39,7 +39,7 @@ This extension is available in English and Czech language. For other languages, 
 
 ## Authors and license
 
-* [Josef Martiňák](https://bitbucket.org/josmart/)
+* [Josef Martiňák](https://bitbucket.org/josmart/), [Petr Kajzar](https://bitbucket.org/petrkajzar/)
 * MIT License, Copyright (c) 2017 First Faculty of Medicine, Charles University
 
 
