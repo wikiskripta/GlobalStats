@@ -1,4 +1,4 @@
-# GlobalStats
+Ôªø# GlobalStats
 
 Mediawiki extension.
 
@@ -39,7 +39,7 @@ This extension is available in English and Czech language. For other languages, 
 
 ## Authors and license
 
-* [Josef MartiÚ·k](https://bitbucket.org/josmart/)
+* [Josef Marti≈à√°k](https://bitbucket.org/josmart/)
 * MIT License, Copyright (c) 2017 First Faculty of Medicine, Charles University
 
 
