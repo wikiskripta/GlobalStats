@@ -9,8 +9,8 @@
  */
 
 # Bot accounts
-$user = "JumBot";
-$pass = "rsWx859ra5";
+$user = "Botaccount";
+$pass = "????????";
 
 
 /**
