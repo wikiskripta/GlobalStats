@@ -14,13 +14,14 @@ class GlobalStats extends SpecialPage {
 	}
 
 	function execute($par) {
-		global $wgSitename;
 	
 		$this->setHeaders();
  		$request = $this->getRequest();
 		$out = $this->getOutput();
+		$wikipage->getWikiPage();
+		$sitename = $wikipage->getWikiDisplayName();
 		
-		// styly
+		// styles
 		$out->addHTML("
 			<style type='text/css'>
 				table {
@@ -39,52 +40,51 @@ class GlobalStats extends SpecialPage {
 		");
 			
 		// otevreni souboru se statistikama
-		$soubor = preg_replace("/index.php/","extensions/GlobalStats/$wgSitename.csv",$_SERVER["SCRIPT_FILENAME"]);
-	
-		$statfile = fopen($soubor, "r");
+		$fpath = __DIR__ . "/data/$sitename.csv";
+		$statfile = fopen($fpath, "r");
 		
 		$line = fgets($statfile);
 		$line = fgets($statfile);	
-		$arr=explode(";",rtrim($line));	// prvni zaznam
+		$arr=explode(";",rtrim($line));	// first row
 		
 		if(!$arr[0]) { echo "Empty statistics";	exit; }
 		
-		$datum = date("Y-m-d");
+		$today = date("Y-m-d");
 		$days = array();
 		
-		// nacteni datumu z tabulky do pole $days
-		$days[0] = $arr[0];	// datum prvniho zaznamu
+		// put days from csv to an array $days
+		$days[0] = $arr[0];	// first records' date
 		$i=1;
 		$line = fgets($statfile);
 		while (!feof($statfile)) {
-			if(substr($line,0,10)==$datum) $arr=explode(";",rtrim($line));
+			if(substr($line,0,10)==$today) $arr=explode(";",rtrim($line));
 			$days[$i] = substr($line,0,10);
 			$line = fgets($statfile);
 			$i++;
 		}
 		
-		if($arr[0]!=$datum) $arr = array($datum,"?","?","?","?","?","?","?","?","?","?");
+		if($arr[0]!=$today) $arr = array($today,"?","?","?","?","?","?","?","?","?","?");
 			
-		// zpracovani vstupu
+		// process input
 		if(isset($_POST["from"]) && in_array( $_POST["from"], $days ) ) $from = $_POST["from"]; 
 		else {
-			// defaultne pouze poslednich 30dni
+			// default last 30 days
 			if(sizeof($days)<31) $from = $days[0];
 			else $from = $days[sizeof($days)-31];
 		}
 		if(isset($_POST["to"]) && in_array( $_POST["to"], $days ) && $_POST["to"]>=$from) $to = $_POST["to"]; 
 		else {
-			// posledni zobrazovany den statistiky
+			// last displayed day
 			if(sizeof($days)==0) $to = $days[0];
 			else $to = $days[sizeof($days)-1];
 		}
 		if(isset($_POST["chb"])) {
 			for($i=0;$i<10;$i++) if(isset($_POST["chb"][$i])) $chb[$i] = 1; else $chb[$i] = 0;
 		}
-		else $chb = array(1,1,1,1,1,1,1,1,1,1);	// ktere checkboxy budou zatrhnuty
-		if(isset($_POST["CSVexport"])) $CSVexport = "export"; else $CSVexport = false;
+		else $chb = array(1,1,1,1,1,1,1,1,1,1);	// which checkboxes are checked?
+		if(isset($_POST["CSVexport"])) $CSVexport = true; else $CSVexport = false;
 
-		// aktualni statistika
+		// Legend
 		$out->addWikiText("<h2>".$this->msg( 'gs_todaystat' )->escaped()."</h2>");
 		$out->addHTML("<table>");
 		$out->addHTML("<tr>");
@@ -147,7 +147,7 @@ class GlobalStats extends SpecialPage {
 		$out->addHTML("</table>");
 		$out->addHTML("<br/><br/>");
 		
-		// kompletni statistiky
+		// Form
 		$out->addWikiText("<h2>".$this->msg( 'gs_completestat' )->escaped()."</h2>");
 		$out->addHTML("<form id='form' name='form' action='' method='post'>");
 		$out->addHTML("<fieldset><legend>".$this->msg( 'gs_settings' )->escaped()."</legend>");
@@ -157,7 +157,6 @@ class GlobalStats extends SpecialPage {
 				$out->addHTML("<td>");
 					//$out->addHTML("<span title='YYYY-MM-DD ($days[0] ... ".$days[sizeof($days)-1].")'><input type='text' name='from' value='$from' placeholder='YYYY-MM-DD' style='width:90px;'/></span>");
                 	$out->addHTML("<select name='from'>");
-                    	// vytvoreni polozek <select></select>
 						foreach($days as $day) {
 							$opts .= "<option value='".$day."'";
 							if($day==$from) $opts .= " selected='selected'";
@@ -218,11 +217,11 @@ class GlobalStats extends SpecialPage {
             $out->addHTML("</tr>");
             $out->addHTML("<tr><td colspan='7' style='height:30px;vertical-align:bottom;'><input type='submit' name='update' value='".$this->msg( 'gs_refresh' )->escaped()."'/>&nbsp;<input type='submit' name='CSVexport' value='".$this->msg( 'gs_export' )->escaped()."'/></td>");
         	$out->addHTML("</table>");
-		//$out->addHTML($this->msg( 'gs_IE_warning' )->escaped());
 		$out->addHTML("</fieldset>");
 	    $out->addHTML("</form>");
 		$out->addHTML("<br/><br/>");
-			
+
+		// Output stat's table
 		$out->addHTML("<table>");
 		$out->addHTML("<tr>");
 	    	$out->addHTML("<th>date</th>");
@@ -240,11 +239,10 @@ class GlobalStats extends SpecialPage {
 			$export .= ";\r\n";
 	    $out->addHTML("</tr>");
 		
-		// nastaveni pointeru na prvni radek statistiky
-    	rewind($statfile);
+
+    	rewind($statfile);	// rewind to the first record
 		$line = fgets($statfile);
 
-		// zobrazeni tabulky
 		while (!feof($statfile)) {
      	 	$line = fgets($statfile);
 			$arr=explode(";",rtrim($line));
@@ -265,10 +263,10 @@ class GlobalStats extends SpecialPage {
 		
 		$out->addHTML("</table>");
 	
-		
-		if($CSVexport == "export") {
+		// CSV export
+		if($CSVexport) {
 			header('Content-type: text/csv;');
-			header('Content-disposition: attachment; filename="'.$wgSitename.'.csv"');
+			header('Content-disposition: attachment; filename="'.$sitename.'.csv"');
 			print ($export);
 			exit;
 		}	

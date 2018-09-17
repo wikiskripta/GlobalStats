@@ -1,11 +1,16 @@
 {
 	"name": "GlobalStats",
-	"version": "1.2.0",
+	"version": "1.1",
 	"author": "Josef Martiňák, Petr Kajzar",
-	"url": "http://www.wikiskripta.eu",
+	"url": "https://bitbucket.org/wikiskripta/globalstats",
 	"description": "Global statistics of this Wiki.",
 	"descriptionmsg": "globalstats-desc",
 	"type": "specialpage",
+	"license-name": "MIT",
+	"status": "stable",
+	"requires": {
+		"MediaWiki": ">= 1.29.0"
+	},
 	"SpecialPages": {
 		"GlobalStats": "GlobalStats"
 	},
@@ -17,5 +22,5 @@
 	"AutoloadClasses": {
 		"GlobalStats": "GlobalStats_body.php"
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }

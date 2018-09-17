@@ -4,21 +4,40 @@ Mediawiki extension.
 
 ## Description
 
-* Version 1.2.0
+* Version 1.1
 * _GlobalStats_ collects everyday stats for wiki.
 * See special page _Special:GlobalStats_ for results.
 
 
 ## Installation
 
-* Make sure you have MediaWiki 1.25+ installed.
-* Download and place the extension's folder to your /extensions/ folder.
+* Make sure you have MediaWiki 1.29+ installed.
+* Download and place the extension to your /extensions/ folder.
 * Add the following code to your LocalSettings.php: `wfLoadExtension( 'GlobalStats' )`;
-* Add file with name _$wgSitename.csv_ (see LocalSettings.php) to the extension's folder.
+* Add file with name _$wgSitename.csv_ (see LocalSettings.php) to the /data/ folder.
 * In case od wikifarm more files like this can be added.
 * Create bot account at wiki.
-* Set variables in _cron/config.php_.
+* Set variables in _cron/config.php_ and _cron/config-bot.php_.
 * Set CRON job for _cron/updateStat.php_ ... every day.
+
+
+## Configuration
+
+### _cron/config.php - example
+// array(URL,stat's filename,custom stat's wiki page)
+$wikis[0] = array("www.wikiskripta.eu","WikiSkripta.csv","WikiSkripta:Statistiky");
+$wikis[1] = array("www.wikilectures.eu","WikiLectures.csv","WikiLectures:Statistics");
+
+### _cron/config-bot.php - example
+
+Create file _cron/config-bot.php_ (if not exist) with following content
+```
+<?php
+$botUser = "Bot_account_name";
+$botPassword = "Bot_password";
+?>
+```
+In case of wikifarm, this account should exist on all wikis.
 
 
 ## Details
@@ -40,7 +59,7 @@ This extension is available in English and Czech language. For other languages, 
 ## Authors and license
 
 * [Josef Martiňák](https://bitbucket.org/josmart/), [Petr Kajzar](https://bitbucket.org/petrkajzar/)
-* MIT License, Copyright (c) 2017 First Faculty of Medicine, Charles University
+* MIT License, Copyright (c) 2018 First Faculty of Medicine, Charles University
 
 
 
