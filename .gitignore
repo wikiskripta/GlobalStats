@@ -1,2 +1,2 @@
 data/*
-config/config-bot.php
+cron/config-bot.php
