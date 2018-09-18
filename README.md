@@ -21,7 +21,7 @@ Mediawiki extension.
 
 ## Configuration
 
-### _cron/config.php - example
+### cron/config.php - example
 
 ```php
 // array(URL,stat's filename,custom stat's wiki page)
@@ -30,7 +30,7 @@ $wikis[1] = array("https://www.wikilectures.eu","WikiLectures.csv","WikiLectures
 $wikis[2] = array("http://www.statest.cz","StaTest.csv","");
 ```
 
-### _cron/config-bot.php - example
+### cron/config-bot.php - example
 
 Create file _cron/config-bot.php_ (if not exist) with following content
 
