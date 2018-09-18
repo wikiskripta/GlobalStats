@@ -18,6 +18,7 @@ Mediawiki extension.
 * Create bot account at wiki.
 * Set variables in _cron/config.php_ and _cron/config-bot.php_.
 * Set CRON job for _cron/updateStat.php_ ... every day.
+* /data/ folder and _cron/logincookie.txt_ must be writable for user running PHP.
 
 ## Configuration
 
