@@ -12,6 +12,7 @@
 
 require 'bot.class.php';
 require 'config-bot.php';
+require 'config.php';
 
 
 foreach($wikis as $info){
@@ -20,7 +21,7 @@ foreach($wikis as $info){
     if( !(file_get_contents($info[0]."/api.php") ) ) continue;
 
     // Create stat file if not exists
-    $fpath = __DIR__ . "../data/" . $info[1];
+    $fpath = __DIR__ . "/../data/" . $info[1];
     $statfile = fopen($fpath, "r+");
     if(!filesize($fpath)) fwrite($statfile,"date;total;good;views;edits;users;admins;images;activeusers;valid_checked;checked\n");	// columns
 
@@ -43,38 +44,50 @@ foreach($wikis as $info){
     // Get stats from wiki
     $query = array( 'action' => 'query',
                     'meta' => 'siteinfo',
-                    'prop' => 'statistics',
+                    'siprop' => 'statistics',
                     'format' => 'json' );
-    $json = $bot->callApi($query);
+    $json = $bot->callApi($query);  
+
     $row = $total = $good = $edits = $views = $admins = $images = $users = $activeusers = $views = $checked = $valid_checked = 0;
     if( !isset($json->error) ) {
-        $total = $json->statistics->pages;
-        $good = $json->statistics->articles;
-        $edits = $json->statistics->edits;
-        $admins = $json->statistics->admins;
-        $images = $json->statistics->images;
-        $users = $json->statistics->users;
-        $activeusers = $json->statistics->activeusers;
+        $total = $json->query->statistics->pages;
+        $good = $json->query->statistics->articles;
+        $edits = $json->query->statistics->edits;
+        $admins = $json->query->statistics->admins;
+        $images = $json->query->statistics->images;
+        $users = $json->query->statistics->users;
+        $activeusers = $json->query->statistics->activeusers;
     }
 
     // Get number of views (HitCounters)
-    if( $stathc = file_get_contents($info[0] . "/index.php?title=Special:Statistics" ) ) {
-        if(preg_match("/id=\"mw-hitcounters-statistics-views-total\"><td>[^<]*<\/td><td class=\"mw-statistics-numbers\">([^<]*)/",$stathc,$matches) ) {
-            $views = preg_replace("/\s+/u","",urldecode($matches[1]));
-        }
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $info[0] . "/index.php?title=" . urlencode("Special:Statistics"));
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+    $response = curl_exec($ch);
+    if(preg_match("/id=\"mw-hitcounters-statistics-views-total\"><td>[^<]*<\/td><td class=\"mw-statistics-numbers\">([^<]*)/",$response,$matches) ) {
+        $views = preg_replace("/\s+/u","",urldecode($matches[1]));
     }
 
     $row = "$today;$total;$good;$views;$edits;$users;$admins;$images;$activeusers";
 
     // Check articles (WikiSkripta + Wikilectures)
     if($info[2]) {
-        $pagecontent = file_get_contents($info[0]."/w/$info[2]");
-        $tmp = preg_match("/\<span id=\"actualCheckedArt\"\>([0-9]*)\<\/span\>/",$pagecontent,$matches);
-        $valid_checked = $matches[1].";";
-        $tmp = preg_match("/\<span id=\"allCheckedArt\"\>([0-9]*)\<\/span\>/",$pagecontent,$matches);
-        $checked = $matches[1];
-        $row .= ";$valid_checked;$checked";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $info[0] . "/index.php?title=" . urlencode($info[2]));
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $response = curl_exec($ch);
+        if( preg_match("/\<span id=\"actualCheckedArt\"\>([0-9]*)\<\/span\>/",$response,$matches) ) {
+            $valid_checked = $matches[1];
+        }
+        if( preg_match("/\<span id=\"allCheckedArt\"\>([0-9]*)\<\/span\>/",$response,$matches) ) {
+            $checked = $matches[1];
+        }
     }
+    $row .= ";$valid_checked;$checked";
     
     fwrite($statfile,$row . "\n");
     fclose($statfile);

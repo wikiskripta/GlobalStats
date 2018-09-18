@@ -14,12 +14,11 @@ class GlobalStats extends SpecialPage {
 	}
 
 	function execute($par) {
-	
+		
+		global $wgSitename;
 		$this->setHeaders();
  		$request = $this->getRequest();
 		$out = $this->getOutput();
-		$wikipage->getWikiPage();
-		$sitename = $wikipage->getWikiDisplayName();
 		
 		// styles
 		$out->addHTML("
@@ -35,12 +34,12 @@ class GlobalStats extends SpecialPage {
 					text-align:left;
 				}	
 				form td, form table, form th { border-width:0px; }
-				.checkbox { width:100px; }
+				.checkbox { width:130px; }
 			</style>
 		");
 			
 		// otevreni souboru se statistikama
-		$fpath = __DIR__ . "/data/$sitename.csv";
+		$fpath = __DIR__ . "/data/$wgSitename.csv";
 		$statfile = fopen($fpath, "r");
 		
 		$line = fgets($statfile);
@@ -156,7 +155,8 @@ class GlobalStats extends SpecialPage {
             	$out->addHTML("<th>".$this->msg( 'gs_from' )->escaped().":</th>");
 				$out->addHTML("<td>");
 					//$out->addHTML("<span title='YYYY-MM-DD ($days[0] ... ".$days[sizeof($days)-1].")'><input type='text' name='from' value='$from' placeholder='YYYY-MM-DD' style='width:90px;'/></span>");
-                	$out->addHTML("<select name='from'>");
+					$out->addHTML("<select name='from'>");
+						$opts = '';
 						foreach($days as $day) {
 							$opts .= "<option value='".$day."'";
 							if($day==$from) $opts .= " selected='selected'";
@@ -175,7 +175,7 @@ class GlobalStats extends SpecialPage {
                 $out->addHTML("<td class='checkbox'><input type='checkbox' name='chb[2]' ");
 				if($chb[2]) $out->addHTML("checked='checked'");
 				$out->addHTML("/> views</td>");
-				$out->addHTML("<td class='checkbox' style='width:150px;'><input type='checkbox' name='chb[8]' ");
+				$out->addHTML("<td class='checkbox'><input type='checkbox' name='chb[8]' ");
 				if($chb[8]) $out->addHTML("checked='checked'");
 				$out->addHTML("/> valid_checked</td>");
             $out->addHTML("</tr>");
@@ -236,7 +236,7 @@ class GlobalStats extends SpecialPage {
 		    if($chb[7]) { $out->addHTML("<th>activeusers</th>"); $export .= ";activeusers"; }
 			if($chb[8]) { $out->addHTML("<th>valid_checked</th>"); $export .= ";valid_checked"; }
 			if($chb[9]) { $out->addHTML("<th>checked</th>"); $export .= ";checked"; }
-			$export .= ";\r\n";
+			$export .= "\r\n";
 	    $out->addHTML("</tr>");
 		
 
@@ -256,7 +256,7 @@ class GlobalStats extends SpecialPage {
 						$export .= ";".$arr[$i];
 					}
 				}
-				$export .= ";\r\n";
+				$export .= "\r\n";
 				$out->addHTML("</tr>\n");
 			}
 	    }
@@ -266,7 +266,7 @@ class GlobalStats extends SpecialPage {
 		// CSV export
 		if($CSVexport) {
 			header('Content-type: text/csv;');
-			header('Content-disposition: attachment; filename="'.$sitename.'.csv"');
+			header('Content-disposition: attachment; filename="'.$wgSitename.'.csv"');
 			print ($export);
 			exit;
 		}	
