@@ -1,7 +1,10 @@
 {
 	"name": "GlobalStats",
 	"version": "1.1",
-	"author": "Josef Martiňák, Petr Kajzar",
+	"author": [
+		"[https://www.wikiskripta.eu/w/User:Josmart Josef Martiňák]",
+		"[https://www.wikiskripta.eu/w/User:Slepi Petr Kajzar]"
+	],
 	"url": "https://bitbucket.org/wikiskripta/globalstats",
 	"description": "Global statistics of this Wiki.",
 	"descriptionmsg": "globalstats-desc",

@@ -60,5 +60,5 @@ This extension is available in English and Czech language. For other languages, 
 
 ## Authors and license
 
-* [Josef Martiňák](https://bitbucket.org/josmart/), [Petr Kajzar](https://bitbucket.org/petrkajzar/)
+* [Josef Martiňák](https://www.wikiskripta.eu/w/User:Josmart), [Petr Kajzar](https://www.wikiskripta.eu/w/User:Slepi)
 * MIT License, Copyright (c) 2018 First Faculty of Medicine, Charles University
