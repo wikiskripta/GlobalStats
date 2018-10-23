@@ -23,7 +23,7 @@ foreach($wikis as $info){
     // Create stat file if not exists
     $fpath = __DIR__ . "/../data/" . $info[1];
     $statfile = fopen($fpath, "r+");
-    if(!filesize($fpath)) fwrite($statfile,"date;total;good;views;edits;users;admins;images;activeusers;valid_checked;checked\n");	// columns
+    if(!filesize($fpath)) fwrite($statfile,"date;total;good;edits;users;admins;images;activeusers;valid_checked;checked\n");	// columns
 
     // One record a day check
     $today = date("Y-m-d");
@@ -48,7 +48,7 @@ foreach($wikis as $info){
                     'format' => 'json' );
     $json = $bot->callApi($query);  
 
-    $row = $total = $good = $edits = $views = $admins = $images = $users = $activeusers = $views = $checked = $valid_checked = 0;
+    $row = $total = $good = $edits = $admins = $images = $users = $activeusers = $checked = $valid_checked = 0;
     if( !isset($json->error) ) {
         $total = $json->query->statistics->pages;
         $good = $json->query->statistics->articles;
@@ -58,19 +58,8 @@ foreach($wikis as $info){
         $users = $json->query->statistics->users;
         $activeusers = $json->query->statistics->activeusers;
     }
-
-    // Get number of views (HitCounters)
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $info[0] . "/index.php?title=" . urlencode("Special:Statistics"));
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-    $response = curl_exec($ch);
-    if(preg_match("/id=\"mw-hitcounters-statistics-views-total\"><td>[^<]*<\/td><td class=\"mw-statistics-numbers\">([^<]*)/",$response,$matches) ) {
-        $views = preg_replace("/\s+/u","",urldecode($matches[1]));
-    }
-
-    $row = "$today;$total;$good;$views;$edits;$users;$admins;$images;$activeusers";
+    
+    $row = "$today;$total;$good;$edits;$users;$admins;$images;$activeusers";
 
     // Check articles (WikiSkripta + Wikilectures)
     if($info[2]) {
