@@ -28,14 +28,17 @@ foreach($wikis as $info){
     // One record a day check
     $today = date("Y-m-d");
     $updated = false;
+    $alreadyRecent = false;
     while (!feof($statfile)) {
         $buffer = fgets($statfile);
         if(strpos($buffer,$today)!==false) {
             fclose($statfile);
             unset($statfile);
-            exit;
+            $alreadyRecent = true;
+            break;
         }
     }
+    if($alreadyRecent) continue;
 
     // Bot login
     $bot = new Bot($info[0], $botUser, $botPassword);
@@ -58,7 +61,7 @@ foreach($wikis as $info){
         $users = $json->query->statistics->users;
         $activeusers = $json->query->statistics->activeusers;
     }
-    
+
     $row = "$today;$total;$good;$edits;$users;$admins;$images;$activeusers";
 
     // Check articles (WikiSkripta + Wikilectures)
@@ -77,7 +80,7 @@ foreach($wikis as $info){
         }
     }
     $row .= ";$valid_checked;$checked";
-    
+
     fwrite($statfile,$row . "\n");
     fclose($statfile);
     unset($statfile);
