@@ -86,4 +86,5 @@ foreach($wikis as $info){
     unset($statfile);
     unset($row);
     $bot->logout();
+
 }
