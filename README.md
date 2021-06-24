@@ -4,7 +4,7 @@ Mediawiki extension.
 
 ## Description
 
-* Version 1.2
+* Version 1.2.1
 * _GlobalStats_ collects everyday stats for wiki.
 * See special page _Special:GlobalStats_ for results.
 
@@ -41,7 +41,11 @@ This extension is available in English and Czech language. For other languages, 
 
 * views count removed
 
+### 1.2.1
+
+* $out->addWikiText deprecated, use $out->addWikiTextAsInterface instead
+
 ## Authors and license
 
 * [Josef Martiňák](https://www.wikiskripta.eu/w/User:Josmart), [Petr Kajzar](https://www.wikiskripta.eu/w/User:Slepi)
-* MIT License, Copyright (c) 2018 First Faculty of Medicine, Charles University
+* MIT License, Copyright (c) 2021 First Faculty of Medicine, Charles University

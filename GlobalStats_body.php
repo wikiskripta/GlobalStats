@@ -84,7 +84,7 @@ class GlobalStats extends SpecialPage {
 		if(isset($_POST["CSVexport"])) $CSVexport = true; else $CSVexport = false;
 
 		// Legend
-		$out->addWikiText("<h2>".$this->msg( 'gs_todaystat' )->escaped()."</h2>");
+		$out->addWikiTextAsInterface("<h2>".$this->msg( 'gs_todaystat' )->escaped()."</h2>");
 		$out->addHTML("<table>");
 		$out->addHTML("<tr>");
 	   		$out->addHTML("<th style='width:40px'>date</th>");
@@ -142,7 +142,7 @@ class GlobalStats extends SpecialPage {
 		$out->addHTML("<br/><br/>");
 		
 		// Form
-		$out->addWikiText("<h2>".$this->msg( 'gs_completestat' )->escaped()."</h2>");
+		$out->addWikiTextAsInterface("<h2>".$this->msg( 'gs_completestat' )->escaped()."</h2>");
 		$out->addHTML("<form id='form' name='form' action='' method='post'>");
 		$out->addHTML("<fieldset><legend>".$this->msg( 'gs_settings' )->escaped()."</legend>");
     	$out->addHTML("<table>");

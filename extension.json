@@ -1,6 +1,6 @@
 {
 	"name": "GlobalStats",
-	"version": "1.2",
+	"version": "1.2.1",
 	"author": [
 		"[https://www.wikiskripta.eu/w/User:Josmart Josef Martiňák]",
 		"[https://www.wikiskripta.eu/w/User:Slepi Petr Kajzar]"
@@ -12,7 +12,7 @@
 	"license-name": "MIT",
 	"status": "stable",
 	"requires": {
-		"MediaWiki": ">= 1.29.0"
+		"MediaWiki": ">= 1.36.0"
 	},
 	"SpecialPages": {
 		"GlobalStats": "GlobalStats"
