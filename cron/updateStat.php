@@ -5,15 +5,11 @@
  * Check every day wiki's stats and add row to csv file
  * @ingroup Extensions
  * @author Josef Martiňák
- * @license MIT
- * @file
  */
-
 
 require 'bot.class.php';
 require 'config-bot.php';
 require 'config.php';
-
 
 foreach($wikis as $info){
 

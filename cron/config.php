@@ -8,7 +8,6 @@
  * @file
  */
 
-
 # array(URL,stat's filename,custom stat's wiki page)
 $wikis[0] = array("https://www.wikiskripta.eu","WikiSkripta.csv","WikiSkripta:Statistiky");
 $wikis[1] = array("https://www.wikilectures.eu","WikiLectures.csv","WikiLectures:Statistics");

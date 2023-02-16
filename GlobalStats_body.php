@@ -4,8 +4,6 @@
  * SpecialPage file for GlobalStats
  * @ingroup Extensions
  * @author Josef Martiňák
- * @license MIT
- * @file
  */
 
 class GlobalStats extends SpecialPage {

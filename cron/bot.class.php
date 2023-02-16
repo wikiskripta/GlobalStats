@@ -4,8 +4,6 @@
  * Mediawiki API access Class
  * @ingroup App
  * @author Josef Martiňák
- * @license MIT
- * @file
  */
 
 class Bot {
