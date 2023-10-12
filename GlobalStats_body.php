@@ -78,7 +78,7 @@ class GlobalStats extends SpecialPage {
         if(isset($_POST["chb"])) {
             for($i=0;$i<9;$i++) if(isset($_POST["chb"][$i])) $chb[$i] = 1; else $chb[$i] = 0;
         }
-        else $chb = array(1,1,1,1,1,1,1,1,1);	// which checkboxes are checked?
+        else $chb = array(1,1,1,1,1,1,1,);	// which checkboxes are checked?
         if(isset($_POST["CSVexport"])) $CSVexport = true; else $CSVexport = false;
 
         // Legend
@@ -124,17 +124,6 @@ class GlobalStats extends SpecialPage {
             $out->addHTML("<td>".$this->msg( 'gs_activeusers' )->escaped()."</td>");
             $out->addHTML("<td>$arr[7]</td>");
         $out->addHTML("</tr>");
-        $out->addHTML("<tr>");
-            $out->addHTML("<th>valid_checked</th>");
-            $out->addHTML("<td>".$this->msg( 'gs_actualCheckedArt' )->escaped()."</td>");
-            $out->addHTML("<td>$arr[8]</td>");
-        $out->addHTML("</tr>");
-        $out->addHTML("<tr>");
-            $out->addHTML("<th>checked</th>");
-            $out->addHTML("<td>".$this->msg( 'gs_allCheckedArt' )->escaped()."</td>");
-            $out->addHTML("<td>$arr[9]</td>");
-        $out->addHTML("</tr>");
-
         $out->addHTML("</table>");
         $out->addHTML("<br/><br/>");
 
@@ -164,9 +153,6 @@ class GlobalStats extends SpecialPage {
                 $out->addHTML("<td class='checkbox'><input type='checkbox' name='chb[1]' ");
                 if($chb[1]) $out->addHTML("checked='checked'");
                 $out->addHTML("/> good</td>");
-                $out->addHTML("<td class='checkbox'><input type='checkbox' name='chb[7]' ");
-                if($chb[7]) $out->addHTML("checked='checked'");
-                $out->addHTML("/> valid_checked</td>");
             $out->addHTML("</tr>");
             $out->addHTML("<tr>");
                 $out->addHTML("<th>".$this->msg( 'gs_to' )->escaped().":</th>");
@@ -191,9 +177,6 @@ class GlobalStats extends SpecialPage {
                 $out->addHTML("<td class='checkbox'><input type='checkbox' name='chb[5]' ");
                 if($chb[5]) $out->addHTML("checked='checked'");
                 $out->addHTML("/> images</td>");
-                $out->addHTML("<td class='checkbox'><input type='checkbox' name='chb[8]' ");
-                if($chb[8]) $out->addHTML("checked='checked'");
-                $out->addHTML("/> checked</td>");
             $out->addHTML("</tr>");
             $out->addHTML("<tr>");
                 $out->addHTML("<td colspan='3'></td>");
@@ -222,8 +205,6 @@ class GlobalStats extends SpecialPage {
             if($chb[4]) { $out->addHTML("<th>admins</th>"); $export .= ";admins"; }
             if($chb[5]) { $out->addHTML("<th>images</th>"); $export .= ";images"; }
             if($chb[6]) { $out->addHTML("<th>activeusers</th>"); $export .= ";activeusers"; }
-            if($chb[7]) { $out->addHTML("<th>valid_checked</th>"); $export .= ";valid_checked"; }
-            if($chb[8]) { $out->addHTML("<th>checked</th>"); $export .= ";checked"; }
             $export .= "\r\n";
         $out->addHTML("</tr>");
 

@@ -47,7 +47,7 @@ foreach($wikis as $info){
                     'format' => 'json' );
     $json = $bot->callApi($query);  
 
-    $row = $total = $good = $edits = $admins = $images = $users = $activeusers = $checked = $valid_checked = 0;
+    $row = $total = $good = $edits = $admins = $images = $users = $activeusers = 0;
     if( !isset($json->error) ) {
         $total = $json->query->statistics->pages;
         $good = $json->query->statistics->articles;
@@ -59,23 +59,6 @@ foreach($wikis as $info){
     }
 
     $row = "$today;$total;$good;$edits;$users;$admins;$images;$activeusers";
-
-    // Check articles (WikiSkripta + Wikilectures)
-    if($info[2]) {
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $info[0] . "/index.php?title=" . urlencode($info[2]));
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-        $response = curl_exec($ch);
-        if( preg_match("/\<span id=\"actualCheckedArt\"\>([0-9]*)\<\/span\>/",$response,$matches) ) {
-            $valid_checked = $matches[1];
-        }
-        if( preg_match("/\<span id=\"allCheckedArt\"\>([0-9]*)\<\/span\>/",$response,$matches) ) {
-            $checked = $matches[1];
-        }
-    }
-    $row .= ";$valid_checked;$checked";
 
     fwrite($statfile,$row . "\n");
     fclose($statfile);
