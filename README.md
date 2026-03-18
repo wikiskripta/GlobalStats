@@ -4,7 +4,6 @@ Mediawiki extension.
 
 ## Description
 
-* Version 1.2.1
 * _GlobalStats_ collects everyday stats for wiki.
 * See special page _Special:GlobalStats_ for results.
 
