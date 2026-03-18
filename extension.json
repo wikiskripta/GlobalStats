@@ -6,6 +6,11 @@
 	"description": "Global statistics of this Wiki.",
 	"descriptionmsg": "globalstats-desc",
 	"type": "specialpage",
+	"license-name": "MIT",
+	"status": "stable",
+	"requires": {
+		"MediaWiki": ">= 1.36.0"
+	},
 	"SpecialPages": {
 		"GlobalStats": "GlobalStats"
 	},
@@ -17,5 +22,5 @@
 	"AutoloadClasses": {
 		"GlobalStats": "GlobalStats_body.php"
 	},
-	"manifest_version": 1
+	"manifest_version": 2
 }
