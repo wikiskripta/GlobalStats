@@ -4,12 +4,13 @@ Mediawiki extension.
 
 ## Description
 
+* Version 1.2.2
 * _GlobalStats_ collects everyday stats for wiki.
 * See special page _Special:GlobalStats_ for results.
 
 ## Installation
 
-* Make sure you have MediaWiki 1.29+ installed.
+* Make sure you have MediaWiki 1.45+ installed.
 * Download and place the extension to your /extensions/ folder.
 * Add the following code to your LocalSettings.php: `wfLoadExtension( 'GlobalStats' )`;
 * Add file with name _$wgSitename.csv_ (see LocalSettings.php) to the /data/ folder.
@@ -44,7 +45,11 @@ This extension is available in English and Czech language. For other languages, 
 
 * $out->addWikiText deprecated, use $out->addWikiTextAsInterface instead
 
+### 1.2.2
+
+* + aliases. Optimized for MW 1.45.
+
 ## Authors and license
 
 * [Josef Martiňák](https://www.wikiskripta.eu/w/User:Josmart), [Petr Kajzar](https://www.wikiskripta.eu/w/User:Slepi)
-* MIT License, Copyright (c) 2023 First Faculty of Medicine, Charles University
+* MIT License, Copyright (c) 2026 First Faculty of Medicine, Charles University
