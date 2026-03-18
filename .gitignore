@@ -1,3 +1,4 @@
+_BACKUP
 data/*
 cron/config-bot.php
 cron/logincookie.txt
