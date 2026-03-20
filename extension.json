@@ -5,7 +5,7 @@
   "[https://www.wikiskripta.eu/w/User:Josmart Josef Martiňák]",
   "[https://www.wikiskripta.eu/w/User:Slepi Petr Kajzar]"
  ],
- "url": "https://bitbucket.org/wikiskripta/globalstats",
+ "url": "https://github.com/wikiskripta/GlobalStats",
  "description": "Global statistics of this Wiki.",
  "descriptionmsg": "globalstats-desc",
  "type": "specialpage",
